@@ -1,10 +1,13 @@
 package rest;
 
+import dto.CalculateResultDTO;
 import dto.Cities;
+import dto.CitiesForCalculate;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/calculate")
 public interface CalculateDistanceRestService {
@@ -28,6 +31,6 @@ public interface CalculateDistanceRestService {
     @Path("/calculateDistance")
     @Produces(MediaType.APPLICATION_XML)
     @Consumes(MediaType.APPLICATION_XML)
-    void calculateDistance();
+    List<CalculateResultDTO> calculateDistance(CitiesForCalculate citiesForCalculate);
 
 }

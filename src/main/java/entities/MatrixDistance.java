@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name ="distance")
-public class Distance {
+public class MatrixDistance {
 
     @Id
     @GeneratedValue

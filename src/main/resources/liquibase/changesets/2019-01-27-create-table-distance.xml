@@ -5,37 +5,37 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
 
-    <changeSet id="2019-01-27-create-table-distance-1" author="Denis Matveev">
+    <changeSet id="2019-01-27-create-table-matrixDistance-1" author="Denis Matveev">
         <preConditions>
             <not>
-                <tableExists tableName="distance"/>
+                <tableExists tableName="matrixDistance"/>
             </not>
         </preConditions>
-        <createTable tableName="distance">
+        <createTable tableName="matrixDistance">
             <column name="id" type="BIGINT">
                 <constraints primaryKeyName="pk_distance"/>
             </column>
             <column name="from_city" type="BIGINT"/>
             <column name="to_city" type="BIGINT"/>
-            <column name="distance" type="NUMERIC(10,2)"/>
+            <column name="matrixDistance" type="NUMERIC(10,2)"/>
         </createTable>
     </changeSet>
 
-    <changeSet id="2019-01-27-create-table-distance-2" author="Denis Matveev">
+    <changeSet id="2019-01-27-create-table-matrixDistance-2" author="Denis Matveev">
         <preConditions onFail="MARK_RAN">
             <and>
-                <tableExists tableName="distance"/>
-                <columnExists tableName="distance" columnName="from_city"/>
-                <columnExists tableName="distance" columnName="to_city"/>
+                <tableExists tableName="matrixDistance"/>
+                <columnExists tableName="matrixDistance" columnName="from_city"/>
+                <columnExists tableName="matrixDistance" columnName="to_city"/>
             </and>
         </preConditions>
-        <addForeignKeyConstraint baseTableName="distance"
+        <addForeignKeyConstraint baseTableName="matrixDistance"
                                  baseColumnNames="from_city"
                                  constraintName="FK_from_city"
                                  referencedTableName="city"
                                  referencedColumnNames="id" />
 
-        <addForeignKeyConstraint baseTableName="distance"
+        <addForeignKeyConstraint baseTableName="matrixDistance"
                                  baseColumnNames="to_city"
                                  constraintName="FK_to_city"
                                  referencedTableName="city"

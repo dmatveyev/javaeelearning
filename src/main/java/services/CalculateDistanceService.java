@@ -1,9 +1,10 @@
 package services;
 
-import entities.City;
+import dto.CalculateResultDTO;
+import dto.Cities;
 
 public interface CalculateDistanceService {
 
     String JNDI_NAMI = "CalculateDistanceService";
-    Double calculateDistance(City from, City to);
+    CalculateResultDTO calculateDistance(Cities from, Cities to);
 }

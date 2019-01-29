@@ -1,11 +1,11 @@
 package services;
 
 import entities.City;
-import entities.Distance;
+import entities.MatrixDistance;
 
 public interface DistanceService {
 
-    Distance getDistanceByCities(City from,City to);
+    MatrixDistance getDistanceByCities(City from, City to);
 
-    void saveDistance(Distance distance);
+    void saveDistance(MatrixDistance matrixDistance);
 }
