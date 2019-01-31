@@ -9,6 +9,13 @@ import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +36,18 @@ public class CalculateDistanceRestServiceImpl implements CalculateDistanceRestSe
     }
 
     @Override
-    public Response createCities(Cities cities) {
-        cities.getCities().forEach(cityService::save);
+    public Response createCities(InputStream stream) {
+        //cities.getCities().forEach(cityService::save);
+        InputStreamReader inputStreamReader = new InputStreamReader(stream);
+
+        try {
+            JAXBContext context = JAXBContext.newInstance(Cities.class);
+            Unmarshaller unMarshaller = context.createUnmarshaller();
+            Cities cities =  (Cities) unMarshaller.unmarshal(inputStreamReader);
+            cities.getCities().forEach(cityService::save);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
         return Response.ok().build();
     }
 

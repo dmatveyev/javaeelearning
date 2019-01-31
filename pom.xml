@@ -52,6 +52,11 @@
             <artifactId>resteasy-jackson-provider</artifactId>
             <version>3.0.6.Final</version>
         </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+            <version>2.26</version>
+        </dependency>
     </dependencies>
 
     <build>
