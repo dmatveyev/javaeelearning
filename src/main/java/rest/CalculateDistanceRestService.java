@@ -1,8 +1,6 @@
 package rest;
 
-import dto.CalculateResultDTO;
-import dto.Cities;
-import dto.CitiesForCalculate;
+import dto.*;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

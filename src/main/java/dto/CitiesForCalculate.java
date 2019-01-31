@@ -1,30 +1,28 @@
 package dto;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @XmlRootElement(name  = "ss")
-@XmlSeeAlso({Cities.class, CityDTO.class})
 public class CitiesForCalculate {
 
-    @XmlElement(name = "from")
-    public Cities from;
-    @XmlElement(name = "to")
-    public Cities to;
+    @XmlElement(name = "mode")
+    public CalculateMode mode;
 
-    public CitiesForCalculate() {
-        super();
-    }
+    @XmlElementWrapper(name="from")
+    @XmlElement(name = "city")
+    public List<CityDTO> from;
+    @XmlElementWrapper(name="to")
+    @XmlElement(name = "city")
+    public List<CityDTO> to;
 
-    public Cities getFrom() {
+    public List<CityDTO> getFrom() {
         return from;
     }
 
-    public Cities getTo() {
+    public List<CityDTO> getTo() {
         return to;
     }
 }

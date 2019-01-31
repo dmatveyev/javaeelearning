@@ -1,30 +1,21 @@
 package dto;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import java.util.ArrayList;
-import java.util.Collection;
+import javax.xml.bind.annotation.*;
 import java.util.List;
 
 @XmlRootElement(name  = "cities")
 @XmlSeeAlso(CityDTO.class)
-public class Cities extends ArrayList<CityDTO> {
+@XmlAccessorType(XmlAccessType.PROPERTY)
+public class Cities  {
 
-    public Cities() {
-        super();
-    }
-
-    public Cities(Collection<? extends CityDTO> cityDTOS) {
-        super(cityDTOS);
-    }
+    private List<CityDTO> cities;
 
     @XmlElement(name = "city")
     public List<CityDTO> getCities() {
-        return this;
+        return cities;
     }
 
     public void setCities(List<CityDTO> cities) {
-        this.addAll(cities);
+        this.cities = cities;
     }
 }

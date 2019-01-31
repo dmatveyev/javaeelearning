@@ -1,12 +1,9 @@
 package rest.impl;
 
-import dto.CalculateResultDTO;
-import dto.Cities;
-import dto.CitiesForCalculate;
+import dto.*;
 import rest.CalculateDistanceRestService;
 import services.CalculateDistanceService;
 import services.CityService;
-import util.Util;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -26,8 +23,9 @@ public class CalculateDistanceRestServiceImpl implements CalculateDistanceRestSe
     private CalculateDistanceService calculateDistanceService;
 
     public Cities getCities() {
-
-        return new Cities(cityService.getCities());
+        Cities cities = new Cities();
+        cities.setCities(cityService.getCities());
+        return cities;
     }
 
     @Override

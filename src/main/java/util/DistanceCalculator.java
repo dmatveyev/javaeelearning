@@ -8,5 +8,4 @@ public interface DistanceCalculator {
 
     CalculateResultDTO calculateDistance(Cities from, Cities to, CalculateMode mode);
 
-    String getStringEvent();
 }

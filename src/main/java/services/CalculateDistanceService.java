@@ -1,10 +1,12 @@
 package services;
 
 import dto.CalculateResultDTO;
-import dto.Cities;
+import dto.CityDTO;
+
+import java.util.List;
 
 public interface CalculateDistanceService {
 
     String JNDI_NAMI = "CalculateDistanceService";
-    CalculateResultDTO calculateDistance(Cities from, Cities to);
+    CalculateResultDTO calculateDistance(List<CityDTO> from, List<CityDTO> to);
 }

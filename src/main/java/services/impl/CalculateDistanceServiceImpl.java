@@ -9,6 +9,8 @@ import services.CalculateDistanceService;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 
+import java.util.List;
+
 import static java.lang.Math.atan2;
 import static java.lang.Math.sin;
 import static java.lang.Math.cos;
@@ -21,9 +23,9 @@ public class CalculateDistanceServiceImpl implements CalculateDistanceService {
 
     private static final int EARTH_RADIUS = 6367;
 
-    public CalculateResultDTO calculateDistance(Cities from1, Cities to1) {
-        CityDTO from = from1.getCities().get(0);
-        CityDTO to = to1.getCities().get(0);
+    public CalculateResultDTO calculateDistance(List<CityDTO> from1, List<CityDTO> to1) {
+        CityDTO from = from1.get(0);
+        CityDTO to = to1.get(0);
 
         CalculateResultDTO result = new CalculateResultDTO();
         result.setFrom(from);
