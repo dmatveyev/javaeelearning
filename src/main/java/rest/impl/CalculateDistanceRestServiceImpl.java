@@ -1,6 +1,9 @@
 package rest.impl;
 
 import dto.*;
+
+import org.jboss.resteasy.plugins.providers.multipart.InputPart;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import rest.CalculateDistanceRestService;
 import services.CalculateDistanceService;
 import services.CityService;
@@ -8,16 +11,14 @@ import services.CityService;
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import javax.xml.bind.JAXB;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 
 @Stateless(name = CalculateDistanceRestService.JNDI_NAME)
 @Local(CalculateDistanceRestService.class)
@@ -26,7 +27,7 @@ public class CalculateDistanceRestServiceImpl implements CalculateDistanceRestSe
     @EJB
     private CityService cityService;
 
-   @EJB
+    @EJB
     private CalculateDistanceService calculateDistanceService;
 
     public Cities getCities() {
@@ -36,17 +37,20 @@ public class CalculateDistanceRestServiceImpl implements CalculateDistanceRestSe
     }
 
     @Override
-    public Response createCities(InputStream stream) {
-        //cities.getCities().forEach(cityService::save);
-        InputStreamReader inputStreamReader = new InputStreamReader(stream);
-
-        try {
-            JAXBContext context = JAXBContext.newInstance(Cities.class);
-            Unmarshaller unMarshaller = context.createUnmarshaller();
-            Cities cities =  (Cities) unMarshaller.unmarshal(inputStreamReader);
-            cities.getCities().forEach(cityService::save);
-        } catch (JAXBException e) {
-            e.printStackTrace();
+    public Response createCities(MultipartFormDataInput multiPart) {
+        Map<String, List<InputPart>> uploadForm = multiPart.getFormDataMap();
+        List<InputPart> inputParts = uploadForm.get("");
+        if (inputParts == null) {
+            return Response.noContent().build();
+        }
+        for (InputPart inputPart : inputParts) {
+            MultivaluedMap<String, String> header = inputPart.getHeaders();
+            try (InputStream inputStream = inputPart.getBody(InputStream.class, null)) {
+                Cities cities = JAXB.unmarshal(inputStream, Cities.class);
+                cities.getCities().forEach(cityService::save);
+            } catch (IOException e) {
+                return Response.serverError().build();
+            }
         }
         return Response.ok().build();
     }
@@ -57,5 +61,21 @@ public class CalculateDistanceRestServiceImpl implements CalculateDistanceRestSe
         resultList.add(calculateDistanceService.calculateDistance(citiesForCalculate.getFrom(), citiesForCalculate.getTo()));
 
         return resultList;
+    }
+
+    private void writeFile(byte[] content, String filename) throws IOException {
+
+        File file = new File(filename);
+
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+
+        FileOutputStream fop = new FileOutputStream(file);
+
+        fop.write(content);
+        fop.flush();
+        fop.close();
+
     }
 }
