@@ -6,7 +6,6 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Path("/calculate")
 public interface CalculateDistanceRestService {
@@ -23,12 +22,13 @@ public interface CalculateDistanceRestService {
     @POST
     @Path("/createSities")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_XML)
     Response createCities(MultipartFormDataInput multiPart);
 
     @POST
     @Path("/calculateDistance")
     @Produces(MediaType.APPLICATION_XML)
     @Consumes(MediaType.APPLICATION_XML)
-    List<CalculateResultDTO> calculateDistance(CitiesForCalculate citiesForCalculate);
+    CalculateResults calculateDistance(CitiesForCalculate citiesForCalculate);
 
 }

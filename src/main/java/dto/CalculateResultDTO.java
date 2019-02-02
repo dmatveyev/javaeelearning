@@ -2,7 +2,7 @@ package dto;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+@XmlRootElement(name = "calculateResult")
 public class CalculateResultDTO {
 
     private CityDTO from;
@@ -12,6 +12,8 @@ public class CalculateResultDTO {
     private Double crowflightDistance;
 
     private Double matrixDistance;
+
+    private String error;
 
     public CityDTO getFrom() {
         return from;
@@ -43,5 +45,13 @@ public class CalculateResultDTO {
 
     public void setMatrixDistance(Double matrixDistance) {
         this.matrixDistance = matrixDistance;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

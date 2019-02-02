@@ -3,12 +3,12 @@ package util;
 import dto.CalculateMode;
 import dto.CalculateResultDTO;
 import dto.CityDTO;
-import interceptor.Loggable;
 import services.CalculateDistanceService;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -25,11 +25,16 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
     public List<CalculateResultDTO> calculateDistance(List<CityDTO> from, List<CityDTO> to, CalculateMode mode) {
             CalculateResultDTO calculateResultDTO;
         switch (mode) {
-            case CROWFLIGHT: return calculateDistanceService.calculateDistance(from, to);
-            case MATRIX: break;
-            case ALL: break;
+            case CROWFLIGHT: return calculateDistanceService.calculateDistanceByCrowFlight(from, to);
+            case MATRIX: return calculateDistanceService.calculateDistanceByMatrix(from, to);
+            case ALL: return  calculateDistanceService.calculateDistanceByMixedMode(from, to);
+            default: {
+                CalculateResultDTO error = new CalculateResultDTO();
+                error.setError("Calculation mode isn't set");
+                ArrayList<CalculateResultDTO> result = new ArrayList<>();
+                result.add(error);
+                return result;
+            }
         }
-
-        return null;
     }
 }

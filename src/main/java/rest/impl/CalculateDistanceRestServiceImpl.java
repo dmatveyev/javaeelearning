@@ -55,8 +55,10 @@ public class CalculateDistanceRestServiceImpl implements CalculateDistanceRestSe
     }
 
     @Override
-    public List<CalculateResultDTO> calculateDistance(CitiesForCalculate citiesForCalculate) {
-        return distanceCalculator
-                .calculateDistance(citiesForCalculate.getFrom(), citiesForCalculate.getTo(), citiesForCalculate.mode);
+    public CalculateResults calculateDistance(CitiesForCalculate citiesForCalculate) {
+        CalculateResults calculateResults = new CalculateResults();
+        calculateResults.setCalculateResultDTOS(distanceCalculator
+                .calculateDistance(citiesForCalculate.getFrom(), citiesForCalculate.getTo(), citiesForCalculate.mode));
+        return calculateResults;
     }
 }

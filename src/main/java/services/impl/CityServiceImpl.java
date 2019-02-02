@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("Duplicates")
 @Stateless(name = CityService.JNDI_NAME)
 @Local(CityService.class)
 public class CityServiceImpl implements CityService {
@@ -22,23 +23,17 @@ public class CityServiceImpl implements CityService {
     public List<CityDTO> getCities() {
         List<City> cities = entityManager.createQuery("select c from City c", City.class)
                 .getResultList();
-        List<CityDTO> c = cities
+        return cities
                 .stream()
                 .collect(ArrayList::new,
-                        (list, city) -> {
-                            CityDTO cityDTO = new CityDTO();
-                            cityDTO.setId(city.getId());
-                            cityDTO.setName(city.getName());
-                            cityDTO.setLatitude(city.getLatitude());
-                            cityDTO.setLongitude(city.getLongitude());
-                            list.add(cityDTO);
-                        },
+                        (list, city) ->
+                            list.add(fillDTO(city)),
                         List::addAll);
-        return c;
     }
 
-    public City getById(Long id) {
-        return entityManager.find(City.class, id);
+    public CityDTO getById(Long id) {
+        City city = entityManager.find(City.class, id);
+        return fillDTO(city);
     }
 
     public void save(CityDTO cityDTO) {
@@ -54,6 +49,16 @@ public class CityServiceImpl implements CityService {
 
     }
 
+    @Override
+    public CityDTO getByCoordinates(Double latitude, Double longitude) {
+        City city = entityManager.createQuery("select c from City c" +
+                " where c.latitude = :latitude and c.longitude = :longitude", City.class)
+                .setParameter("latitude", latitude)
+                .setParameter("longitude", longitude)
+                .getSingleResult();
+        return fillDTO(city);
+    }
+
     private City fillEntity(CityDTO cityDTO) {
         City city = new City();
         city.setId(cityDTO.getId());
@@ -61,5 +66,16 @@ public class CityServiceImpl implements CityService {
         city.setLatitude(cityDTO.getLatitude());
         city.setLongitude(cityDTO.getLongitude());
         return city;
+    }
+
+    private CityDTO fillDTO(City city) {
+        CityDTO cityDTO = new CityDTO();
+        if (city != null) {
+            cityDTO.setId(city.getId());
+            cityDTO.setName(city.getName());
+            cityDTO.setLatitude(city.getLatitude());
+            cityDTO.setLongitude(city.getLongitude());
+        }
+        return cityDTO;
     }
 }

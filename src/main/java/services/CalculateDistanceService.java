@@ -8,5 +8,9 @@ import java.util.List;
 public interface CalculateDistanceService {
 
     String JNDI_NAMI = "CalculateDistanceService";
-    List<CalculateResultDTO> calculateDistance(List<CityDTO> from, List<CityDTO> to);
+    List<CalculateResultDTO> calculateDistanceByCrowFlight(List<CityDTO> from, List<CityDTO> to);
+
+    List<CalculateResultDTO> calculateDistanceByMatrix(List<CityDTO> from, List<CityDTO> to);
+
+    List<CalculateResultDTO> calculateDistanceByMixedMode(List<CityDTO> from, List<CityDTO> to);
 }
