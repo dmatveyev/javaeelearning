@@ -37,11 +37,14 @@ public class CityServiceImpl implements CityService {
     }
 
     public void save(CityDTO cityDTO) {
-        City city = fillEntity(cityDTO);
-        if (city.getId() != null) {
-            entityManager.merge(city);
-        } else {
-            entityManager.persist(city);
+        CityDTO temp = getByCoordinates(cityDTO.getLatitude(), cityDTO.getLongitude());
+        if (temp.getId() == null) {
+            City city = fillEntity(cityDTO);
+            if (city.getId() != null) {
+                entityManager.merge(city);
+            } else {
+                entityManager.persist(city);
+            }
         }
     }
 
