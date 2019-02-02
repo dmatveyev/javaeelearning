@@ -27,7 +27,7 @@ public class CityServiceImpl implements CityService {
                 .stream()
                 .collect(ArrayList::new,
                         (list, city) ->
-                            list.add(fillDTO(city)),
+                                list.add(fillDTO(city)),
                         List::addAll);
     }
 
@@ -46,10 +46,6 @@ public class CityServiceImpl implements CityService {
                 entityManager.persist(city);
             }
         }
-    }
-
-    public void remove(CityDTO cityDTO) {
-
     }
 
     @Override

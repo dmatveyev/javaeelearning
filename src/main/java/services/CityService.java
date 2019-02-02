@@ -14,7 +14,5 @@ public interface CityService {
 
     void save(CityDTO cityDTO);
 
-    void remove(CityDTO cityDTO);
-
     CityDTO getByCoordinates(Double latitude, Double longitude);
 }

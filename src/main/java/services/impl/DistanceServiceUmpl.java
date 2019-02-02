@@ -38,11 +38,6 @@ public class DistanceServiceUmpl implements DistanceService {
         return fillDTO(matrixDistance);
     }
 
-    @Override
-    public void saveDistance(MatrixDistance matrixDistance) {
-
-    }
-
     private MatrixDistanceDTO fillDTO(MatrixDistance matrixDistance) {
         MatrixDistanceDTO matrixDistanceDTO = new MatrixDistanceDTO();
         if (matrixDistance.getId() != null) {
@@ -50,6 +45,6 @@ public class DistanceServiceUmpl implements DistanceService {
             matrixDistanceDTO.setFrom(cityService.getById(matrixDistance.getToCity().getId()));
             matrixDistanceDTO.setDistance(matrixDistance.getDistance());
         }
-        return  matrixDistanceDTO;
+        return matrixDistanceDTO;
     }
 }

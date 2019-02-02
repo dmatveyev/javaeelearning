@@ -10,5 +10,4 @@ public interface DistanceService {
 
     MatrixDistanceDTO getDistanceByCities(CityDTO from, CityDTO to);
 
-    void saveDistance(MatrixDistance matrixDistance);
 }
