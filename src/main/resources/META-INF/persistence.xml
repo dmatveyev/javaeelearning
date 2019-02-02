@@ -6,7 +6,7 @@
 
     <persistence-unit name="TestPersistence" transaction-type="JTA">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <jta-data-source>java:jboss/datasources/TestDS</jta-data-source>
+        <jta-data-source>java:/magenta/datasource/test-matrixDistance-calculator</jta-data-source>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=dendb"/>
