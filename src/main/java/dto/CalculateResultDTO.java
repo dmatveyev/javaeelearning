@@ -1,19 +1,18 @@
 package dto;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "calculateResult")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CalculateResultDTO {
 
-    private CityDTO from;
-
-    private CityDTO to;
-
     private Double crowflightDistance;
-
     private Double matrixDistance;
-
     private String error;
+    private CityDTO from;
+    private CityDTO to;
 
     public CityDTO getFrom() {
         return from;

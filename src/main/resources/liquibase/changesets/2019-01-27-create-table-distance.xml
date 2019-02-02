@@ -8,34 +8,34 @@
     <changeSet id="2019-01-27-create-table-matrixDistance-1" author="Denis Matveev">
         <preConditions>
             <not>
-                <tableExists tableName="matrixDistance"/>
+                <tableExists tableName="matrix_distance"/>
             </not>
         </preConditions>
-        <createTable tableName="matrixDistance">
-            <column name="id" type="BIGINT">
+        <createTable tableName="matrix_distance">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKeyName="pk_distance"/>
             </column>
             <column name="from_city" type="BIGINT"/>
             <column name="to_city" type="BIGINT"/>
-            <column name="matrixDistance" type="NUMERIC(10,2)"/>
+            <column name="distance" type="NUMERIC(10,2)"/>
         </createTable>
     </changeSet>
 
     <changeSet id="2019-01-27-create-table-matrixDistance-2" author="Denis Matveev">
         <preConditions onFail="MARK_RAN">
             <and>
-                <tableExists tableName="matrixDistance"/>
-                <columnExists tableName="matrixDistance" columnName="from_city"/>
-                <columnExists tableName="matrixDistance" columnName="to_city"/>
+                <tableExists tableName="matrix_distance"/>
+                <columnExists tableName="matrix_distance" columnName="from_city"/>
+                <columnExists tableName="matrix_distance" columnName="to_city"/>
             </and>
         </preConditions>
-        <addForeignKeyConstraint baseTableName="matrixDistance"
+        <addForeignKeyConstraint baseTableName="matrix_distance"
                                  baseColumnNames="from_city"
                                  constraintName="FK_from_city"
                                  referencedTableName="city"
                                  referencedColumnNames="id" />
 
-        <addForeignKeyConstraint baseTableName="matrixDistance"
+        <addForeignKeyConstraint baseTableName="matrix_distance"
                                  baseColumnNames="to_city"
                                  constraintName="FK_to_city"
                                  referencedTableName="city"

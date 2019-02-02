@@ -38,12 +38,11 @@ public class CalculateDistanceRestServiceImpl implements CalculateDistanceRestSe
     @Override
     public Response createCities(MultipartFormDataInput multiPart) {
         Map<String, List<InputPart>> uploadForm = multiPart.getFormDataMap();
-        List<InputPart> inputParts = uploadForm.get("");
+        List<InputPart> inputParts = uploadForm.get("cities");
         if (inputParts == null) {
             return Response.noContent().build();
         }
         for (InputPart inputPart : inputParts) {
-            MultivaluedMap<String, String> header = inputPart.getHeaders();
             try (InputStream inputStream = inputPart.getBody(InputStream.class, null)) {
                 Cities cities = JAXB.unmarshal(inputStream, Cities.class);
                 cities.getCities().forEach(cityService::save);

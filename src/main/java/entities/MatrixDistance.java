@@ -3,7 +3,7 @@ package entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name ="distance")
+@Table(name ="matrix_distance")
 public class MatrixDistance {
 
     @Id
