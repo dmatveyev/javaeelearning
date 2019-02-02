@@ -8,10 +8,6 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>java:/magenta/datasource/test-matrixDistance-calculator</jta-data-source>
         <properties>
-            <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=dendb"/>
-            <property name="javax.persistence.jdbc.user" value="ds"/>
-            <property name="javax.persistence.jdbc.password" value="ds"/>
             <property name="hibernate.show_sql" value="true"/>
         </properties>
     </persistence-unit>
