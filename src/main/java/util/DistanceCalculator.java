@@ -2,10 +2,14 @@ package util;
 
 import dto.CalculateMode;
 import dto.CalculateResultDTO;
-import dto.Cities;
+import dto.CityDTO;
+
+import java.util.List;
 
 public interface DistanceCalculator {
 
-    CalculateResultDTO calculateDistance(Cities from, Cities to, CalculateMode mode);
+    String JNDI_NAME = "DistanceCalculator";
+
+    List<CalculateResultDTO> calculateDistance(List<CityDTO> from, List<CityDTO> to, CalculateMode mode);
 
 }

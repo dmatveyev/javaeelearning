@@ -1,14 +1,13 @@
 package services.impl;
 
 import dto.CalculateResultDTO;
-import dto.Cities;
 import dto.CityDTO;
-import entities.City;
 import services.CalculateDistanceService;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Math.atan2;
@@ -23,10 +22,18 @@ public class CalculateDistanceServiceImpl implements CalculateDistanceService {
 
     private static final int EARTH_RADIUS = 6367;
 
-    public CalculateResultDTO calculateDistance(List<CityDTO> from1, List<CityDTO> to1) {
-        CityDTO from = from1.get(0);
-        CityDTO to = to1.get(0);
+    public List<CalculateResultDTO> calculateDistance(List<CityDTO> from1, List<CityDTO> to1) {
+        List<CalculateResultDTO> resultList = new ArrayList<>();
+        for (CityDTO cityFrom : from1) {
+            for (CityDTO cityTo: to1) {
+                CalculateResultDTO result = getCalculateResultDTO(cityFrom, cityTo);
+                resultList.add(result);
+            }
+        }
+        return resultList;
+    }
 
+    private CalculateResultDTO getCalculateResultDTO(CityDTO from, CityDTO to) {
         CalculateResultDTO result = new CalculateResultDTO();
         result.setFrom(from);
         result.setTo(to);

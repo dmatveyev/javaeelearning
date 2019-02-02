@@ -5,8 +5,8 @@ import dto.*;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import rest.CalculateDistanceRestService;
-import services.CalculateDistanceService;
 import services.CityService;
+import util.DistanceCalculator;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -15,7 +15,6 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXB;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +27,7 @@ public class CalculateDistanceRestServiceImpl implements CalculateDistanceRestSe
     private CityService cityService;
 
     @EJB
-    private CalculateDistanceService calculateDistanceService;
+    private DistanceCalculator distanceCalculator;
 
     public Cities getCities() {
         Cities cities = new Cities();
@@ -57,25 +56,7 @@ public class CalculateDistanceRestServiceImpl implements CalculateDistanceRestSe
 
     @Override
     public List<CalculateResultDTO> calculateDistance(CitiesForCalculate citiesForCalculate) {
-        List<CalculateResultDTO> resultList = new ArrayList<>();
-        resultList.add(calculateDistanceService.calculateDistance(citiesForCalculate.getFrom(), citiesForCalculate.getTo()));
-
-        return resultList;
-    }
-
-    private void writeFile(byte[] content, String filename) throws IOException {
-
-        File file = new File(filename);
-
-        if (!file.exists()) {
-            file.createNewFile();
-        }
-
-        FileOutputStream fop = new FileOutputStream(file);
-
-        fop.write(content);
-        fop.flush();
-        fop.close();
-
+        return distanceCalculator
+                .calculateDistance(citiesForCalculate.getFrom(), citiesForCalculate.getTo(), citiesForCalculate.mode);
     }
 }

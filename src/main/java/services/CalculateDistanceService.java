@@ -8,5 +8,5 @@ import java.util.List;
 public interface CalculateDistanceService {
 
     String JNDI_NAMI = "CalculateDistanceService";
-    CalculateResultDTO calculateDistance(List<CityDTO> from, List<CityDTO> to);
+    List<CalculateResultDTO> calculateDistance(List<CityDTO> from, List<CityDTO> to);
 }

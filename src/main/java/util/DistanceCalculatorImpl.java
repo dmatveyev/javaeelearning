@@ -2,15 +2,18 @@ package util;
 
 import dto.CalculateMode;
 import dto.CalculateResultDTO;
-import dto.Cities;
+import dto.CityDTO;
 import interceptor.Loggable;
 import services.CalculateDistanceService;
 
 import javax.ejb.EJB;
+import javax.ejb.Local;
+import javax.ejb.Stateless;
+import java.util.List;
 import java.util.logging.Logger;
 
-@Util
-@Loggable
+@Stateless(name = DistanceCalculator.JNDI_NAME)
+@Local(DistanceCalculator.class)
 public class DistanceCalculatorImpl implements DistanceCalculator {
 
     private Logger logger = Logger.getLogger("L");
@@ -19,10 +22,10 @@ public class DistanceCalculatorImpl implements DistanceCalculator {
     private CalculateDistanceService calculateDistanceService;
 
     @Override
-    public CalculateResultDTO calculateDistance(Cities from, Cities to, CalculateMode mode) {
+    public List<CalculateResultDTO> calculateDistance(List<CityDTO> from, List<CityDTO> to, CalculateMode mode) {
             CalculateResultDTO calculateResultDTO;
         switch (mode) {
-            case CROWFLIGHT: return calculateDistanceService.calculateDistance(from.getCities(), to.getCities());
+            case CROWFLIGHT: return calculateDistanceService.calculateDistance(from, to);
             case MATRIX: break;
             case ALL: break;
         }
