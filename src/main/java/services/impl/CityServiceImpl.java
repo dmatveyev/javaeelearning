@@ -8,6 +8,7 @@ import services.CityService;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +51,16 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public CityDTO getByCoordinates(Double latitude, Double longitude) {
-        City city = entityManager.createQuery("select c from City c" +
-                " where c.latitude = :latitude and c.longitude = :longitude", City.class)
-                .setParameter("latitude", latitude)
-                .setParameter("longitude", longitude)
-                .getSingleResult();
+        City city = null;
+        try {
+            city = entityManager.createQuery("select c from City c" +
+                    " where c.latitude = :latitude and c.longitude = :longitude", City.class)
+                    .setParameter("latitude", latitude)
+                    .setParameter("longitude", longitude)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            //
+        }
         return fillDTO(city);
     }
 
