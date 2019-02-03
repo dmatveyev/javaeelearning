@@ -1,0 +1,100 @@
+{
+	"info": {
+		"_postman_id": "ce7c0b95-4849-4573-82cf-0f22592fc15d",
+		"name": "localhost",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getCities",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/javaeelearning/rs/calculate/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"javaeelearning",
+						"rs",
+						"calculate",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createCities",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "citites",
+							"description": "",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/javaeelearning/rs/calculate/createSities",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"javaeelearning",
+						"rs",
+						"calculate",
+						"createSities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "calculateDistance",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<ss>\r\n    <mode>ALL</mode>\r\n    <from>\r\n        <city>\r\n            <id>1</id>\r\n            <latitude>55.75222</latitude>\r\n            <longitude>37.61556</longitude>\r\n            <name>Москва</name>\r\n        </city>\r\n    </from>\r\n    <to>\r\n        <city>\r\n            <id>2</id>\r\n            <latitude>53.20007</latitude>\r\n            <longitude>50.15</longitude>\r\n            <name>Самара</name>\r\n        </city>\r\n    </to>\r\n</ss>"
+				},
+				"url": {
+					"raw": "http://localhost:8080/javaeelearning/rs/calculate/calculateDistance",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"javaeelearning",
+						"rs",
+						"calculate",
+						"calculateDistance"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
