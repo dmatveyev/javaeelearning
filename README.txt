@@ -10,33 +10,33 @@ Simple rest service
 Overview
 Design and implement web service (RESTful) application for matrixDistance calculation:
 •	Database holds two entities:
-o	City
+o	City:
 	Name
 	Latitude
 	Longitude
-o	Distance
+o	Distance:
 	From city
 	To city
 	Distance
 •	Application should make it possible to calculate the matrixDistance in two ways:
 o	“Crowflight” (straight matrixDistance) between cities. Lookup formula for matrixDistance calculation on the sphere in the internet.
 o	Lookup matrixDistance between two cities via “matrixDistance matrix” (matrixDistance table in the database)
-•	API has 3 endpoints:
+	API has 3 endpoints:
 o	List of all cities in the DB. Fields:
 	ID
 	Name
-o	Calculate matrixDistance
-	Input:
-•	Calculation Type: <Crowflight, Distance Matrix, All>
-•	From City: <List of cities>
-•	To City: <List of Cities>
-	Output:
-•	Results: all matrixDistance calculation results as requested
-	Upload data to the DB. Uploads XML file with cities and distances into the application. Application parses it and stores it into the database.
+o	Calculate matrixDistance:
 	Input:
-•	Multipart/form-data form submission with single “File” input.
+	•	Calculation Type: <Crowflight, Distance Matrix, All>
+	•	From City: <List of cities>
+	•	To City: <List of Cities>
 	Output:
-•	HTTP response code 200 without body
+	•	Results: all matrixDistance calculation results as requested
+o	Upload data to the DB. Uploads XML file with cities and distances into the application. Application parses it and stores it into the database.
+	Input:
+	•	Multipart/form-data form submission with single “File” input.
+	Output:
+	•	HTTP response code 200 without body
 Tools/Libraries
 •	JAX-RS
 •	JAXB
