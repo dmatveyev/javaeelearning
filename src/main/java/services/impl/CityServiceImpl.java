@@ -12,6 +12,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("Duplicates")
 @Stateless(name = CityService.JNDI_NAME)
@@ -26,10 +27,8 @@ public class CityServiceImpl implements CityService {
                 .getResultList();
         return cities
                 .stream()
-                .collect(ArrayList::new,
-                        (list, city) ->
-                                list.add(fillDTO(city)),
-                        List::addAll);
+                .map(this::fillDTO)
+                .collect(Collectors.toList());
     }
 
     public CityDTO getById(Long id) {
