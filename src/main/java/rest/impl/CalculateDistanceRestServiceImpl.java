@@ -2,6 +2,7 @@ package rest.impl;
 
 import dto.*;
 
+import jms.Producer;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import rest.CalculateDistanceRestService;
@@ -11,6 +12,7 @@ import util.DistanceCalculator;
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXB;
@@ -28,6 +30,8 @@ public class CalculateDistanceRestServiceImpl implements CalculateDistanceRestSe
 
     @EJB
     private DistanceCalculator distanceCalculator;
+    @Inject
+    private Producer producer;
 
     public Cities getCities() {
         Cities cities = new Cities();
@@ -50,6 +54,7 @@ public class CalculateDistanceRestServiceImpl implements CalculateDistanceRestSe
                 return Response.serverError().build();
             }
         }
+        producer.sendMessage();
         return Response.ok().build();
     }
 
