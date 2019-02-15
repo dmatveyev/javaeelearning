@@ -2,7 +2,6 @@ package services;
 
 import dto.CityDTO;
 import dto.MatrixDistanceDTO;
-import entities.MatrixDistance;
 
 public interface DistanceService {
 

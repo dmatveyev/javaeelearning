@@ -1,6 +1,5 @@
 package services.impl;
 
-
 import dto.CityDTO;
 import entities.City;
 import services.CityService;
@@ -9,15 +8,19 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("Duplicates")
 @Stateless(name = CityService.JNDI_NAME)
 @Local(CityService.class)
 public class CityServiceImpl implements CityService {
+
+    private Logger logger = Logger.getLogger(CityService.JNDI_NAME);
 
     @PersistenceContext(unitName = "TestPersistence")
     private EntityManager entityManager;
@@ -50,17 +53,20 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public CityDTO getByCoordinates(Double latitude, Double longitude) {
-        City city = null;
+        City city;
         try {
             city = entityManager.createQuery("select c from City c" +
                     " where c.latitude = :latitude and c.longitude = :longitude", City.class)
                     .setParameter("latitude", latitude)
                     .setParameter("longitude", longitude)
                     .getSingleResult();
+            return fillDTO(city);
         } catch (NoResultException e) {
-            //
+            logger.log(Level.WARNING, "No saved city");
+        } catch (NonUniqueResultException e) {
+            logger.log(Level.WARNING, "Different cities with same coordinates!");
         }
-        return fillDTO(city);
+        return new CityDTO();
     }
 
     private City fillEntity(CityDTO cityDTO) {
@@ -74,12 +80,10 @@ public class CityServiceImpl implements CityService {
 
     private CityDTO fillDTO(City city) {
         CityDTO cityDTO = new CityDTO();
-        if (city != null) {
-            cityDTO.setId(city.getId());
-            cityDTO.setName(city.getName());
-            cityDTO.setLatitude(city.getLatitude());
-            cityDTO.setLongitude(city.getLongitude());
-        }
+        cityDTO.setId(city.getId());
+        cityDTO.setName(city.getName());
+        cityDTO.setLatitude(city.getLatitude());
+        cityDTO.setLongitude(city.getLongitude());
         return cityDTO;
     }
 }
